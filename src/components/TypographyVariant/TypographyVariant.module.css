@@ -1,0 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap");
+
+.container {
+  margin-top: 10px;
+}
+
+.metaDataKey {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 0px;
+  color: var(--hero-description-text-color);
+}
+
+.metaData {
+  font-size: 13px;
+  font-weight: 400;
+  margin-left: 3px;
+  margin-right: 3px;
+  margin-bottom: 0px;
+  color: var(--hero-description-text-color);
+}
+
+.metaDataContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 768px) {
+  .metaDataContainer {
+    flex-direction: column;
+  }
+}

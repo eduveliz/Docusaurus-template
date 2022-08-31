@@ -1,0 +1,216 @@
+---
+sidebar_position: 1
+title: Generate Color Palette
+---
+
+Pearl UI provides a utility function to create a color palette from a single color. This color palette can then be inserted into `theme.palette` to be used by components.
+
+## Import
+
+```js
+import { generatePalette } from "pearl-ui";
+```
+
+## Usage
+
+### Allowed color inputs
+
+The function uses [TinyColor](https://github.com/bgrins/TinyColor) under the hood, so it's very permissive with the input value for the `color` property
+
+```js
+// Support for Hex values and 8-digit (RGBA) Hex values
+generatePalette("#000", "label");
+generatePalette("000", "label");
+generatePalette("#369C", "label");
+generatePalette("369C", "label");
+generatePalette("#f0f0f6", "label");
+generatePalette("f0f0f6", "label");
+generatePalette("#f0f0f688", "label");
+generatePalette("f0f0f688", "label");
+
+// Support for RGB and RGBA values
+generatePalette("rgb (255, 0, 0)", "label");
+generatePalette("rgb 255 0 0", "label");
+generatePalette("rgba (255, 0, 0, .5)", "label");
+
+// Support for HSL and HSLA values
+generatePalette("hsl(0, 100%, 50%)", "label");
+generatePalette("hsla(0, 100%, 50%, .5)", "label");
+generatePalette("hsl(0, 100%, 50%)", "label");
+generatePalette("hsl 0 1.0 0.5", "label");
+
+// Support for HSV and HSVA values
+generatePalette("hsv(0, 100%, 100%)", "label");
+generatePalette("hsva(0, 100%, 100%, .5)", "label");
+generatePalette("hsv (0 100% 100%)", "label");
+generatePalette("hsv 0 1 1", "label");
+
+// Support for Named color values
+generatePalette("RED", "label");
+generatePalette("blanchedalmond", "label");
+generatePalette("darkblue", "label");
+```
+
+import PaletteColor from "../../src/components/PaletteColor/PaletteColor";
+
+### Basic Usage
+
+```js
+const colorPalette = generatePalette("#00fa9a", "accent");
+```
+
+#### Output
+
+```json
+// colorPalette
+{
+  "accent": {
+    "100": "#b6fee2",
+    "200": "#89fdd0",
+    "300": "#5bfcbe",
+    "400": "#2efbac",
+    "500": "#00fa9a",
+    "600": "#00cd7f",
+    "700": "#00a163",
+    "800": "#007448",
+    "900": "#00472c"
+  }
+}
+```
+
+<br />
+
+<div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
+  <PaletteColor colorName="Accent 100" colorValue="#b6fee2" />
+  <PaletteColor colorName="Accent 200" colorValue="#89fdd0" />
+  <PaletteColor colorName="Accent 300" colorValue="#5bfcbe" />
+  <PaletteColor colorName="Accent 400" colorValue="#2efbac" />
+  <PaletteColor colorName="Accent 500" colorValue="#00fa9a" />
+  <PaletteColor colorName="Accent 600" colorValue="#00cd7f" />
+  <PaletteColor colorName="Accent 700" colorValue="#00a163" />
+  <PaletteColor colorName="Accent 800" colorValue="#007448" />
+  <PaletteColor colorName="Accent 900" colorValue="#00472c" />
+</div>
+
+### Advanced Usage
+
+You can tweak the `count` and `similarity` prop values to have more fine grained control over the palette generation.
+
+```js
+const colorPalette = generatePalette("#00fa9a", "accent", 5, 4);
+```
+
+#### Output
+
+```json
+// colorPalette
+{
+  "accent": {
+    "100": "#40fbb3",
+    "200": "#20fba7",
+    "300": "#00fa9a",
+    "400": "#00db87",
+    "500": "#00bc74"
+  }
+}
+```
+
+<br />
+
+<div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
+  <PaletteColor colorName="Accent 100" colorValue="#40fbb3" />
+  <PaletteColor colorName="Accent 200" colorValue="#20fba7" />
+  <PaletteColor colorName="Accent 300" colorValue="#00fa9a" />
+  <PaletteColor colorName="Accent 400" colorValue="#00db87" />
+  <PaletteColor colorName="Accent 500" colorValue="#00bc74" />
+</div>
+
+<br />
+<br />
+
+```js
+const colorPalette = generatePalette("#00fa9a", "accent", 14, 1);
+```
+
+#### Output
+
+```json
+// colorPalette
+{
+  "accent": {
+    "100": "#ffffff",
+    "200": "#dbfef1",
+    "300": "#b6fee2",
+    "400": "#92fdd4",
+    "500": "#6dfcc5",
+    "600": "#49fbb7",
+    "700": "#24fba8",
+    "800": "#00d684",
+    "900": "#00b36e",
+    "1000": "#008f58",
+    "1100": "#006b42",
+    "1200": "#00472c",
+    "1300": "#002416",
+    "1400": "#000000"
+  }
+}
+```
+
+<br />
+
+<div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
+  <PaletteColor
+    colorName="Accent 100"
+    colorValue="#ffffff"
+    border="1px solid #E4E9F2"
+  />
+  <PaletteColor colorName="Accent 200" colorValue="#dbfef1" />
+  <PaletteColor colorName="Accent 300" colorValue="#b6fee2" />
+  <PaletteColor colorName="Accent 400" colorValue="#92fdd4" />
+  <PaletteColor colorName="Accent 500" colorValue="#6dfcc5" />
+  <PaletteColor colorName="Accent 600" colorValue="#49fbb7" />
+  <PaletteColor colorName="Accent 700" colorValue="#24fba8" />
+  <PaletteColor colorName="Accent 800" colorValue="#00d684" />
+  <PaletteColor colorName="Accent 900" colorValue="#00b36e" />
+  <PaletteColor colorName="Accent 1000" colorValue="#008f58" />
+  <PaletteColor colorName="Accent 1100" colorValue="#006b42" />
+  <PaletteColor colorName="Accent 1200" colorValue="#00472c" />
+  <PaletteColor colorName="Accent 1300" colorValue="#002416" />
+  <PaletteColor colorName="Accent 1400" colorValue="#000000" />
+</div>
+
+### Adding palette to theme
+
+You can insert the generated palette into your theme object as follows. The values `accent.100`, `accent.200`, `accent.300`, etc. would then be available to the props which query the <t>PearlTheme['palette']</t> values (ie, `color` and `backgroundColor`).
+
+```js
+// theme.js
+export default {
+  palette: {
+    primary: {
+      100: "#E1E6FF",
+      200: "#C3CCFF",
+      300: "#A5B1FF",
+      400: "#8F9DFF",
+      500: "#6A7BFF",
+      600: "#4D5BDB",
+      700: "#3541B7",
+      800: "#212A93",
+      900: "#141B7A",
+    }
+
+    ...colorPalette,
+
+    // ...
+  },
+};
+```
+
+## Props
+
+| Name       | Required | Type          | Default | Description                                                                                                                                                                       |
+| ---------- | -------- | ------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| color      | true     | <t>string</t> |         | Color to generate tints and shades for                                                                                                                                            |
+| label      | true     | <t>string</t> |         | Identifier for the generated colors ('primary', 'secondary', etc). Eg, for a label of 'primary', the generated tints and shades be referred as 'primary.100', 'primary.200', etc. |
+| count      | false    | <t>number</t> | `9`     | The number of color values to be generated                                                                                                                                        |
+| similarity | false    | <t>number</t> | `1.4`   | The similarity between the generated colors                                                                                                                                       |

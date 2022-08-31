@@ -1,0 +1,101 @@
+---
+sidebar_position: 5
+title: Divider
+---
+
+**Divider** is used to visually separate content in a list or group.
+
+## Import
+
+```jsx
+import { Divider } from "pearl-ui";
+```
+
+## Usage
+
+```jsx
+<Divider />
+```
+
+### Divider orientation
+
+Use the `orientation` prop to change the direction of the divider.
+
+```jsx
+<Divider orientation="horizontal" />
+
+<Divider orientation="vertical" />
+```
+
+### Override Style
+
+The **Divider** component also supports a [variety of style props](#supported-style-props) which can be used to override the pre-defined style in the theme. Manual style props passed into the component have a higher precedance than the [default component config](#default-component-config).
+
+```jsx
+// passing style prop bg="red" overrides the default component config value of bg="neutral.300"
+<Divider bg="red" />
+```
+
+## Example
+
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<Tabs
+  defaultValue="light"
+  values={[
+    { label: 'Light', value: 'light', },
+    { label: 'Dark', value: 'dark', },
+  ]
+}>
+<TabItem value="light">
+
+<Snack snackId="@agrawal-rohit/divider-light" />
+
+</TabItem>
+
+<TabItem value="dark">
+
+<Snack snackId="@agrawal-rohit/divider-dark" />
+
+</TabItem>
+</Tabs>
+
+## Props
+
+### Supported style props
+
+The **Divider** component supports the following style props:
+
+- [backgroundColor](../../core-features/style-props#color-and-background-color) (Only `backgroundColor` props are supported, not the `color` prop)
+- [layout](../../core-features/style-props#layout)
+- [position](../../core-features/style-props#position)
+- [opacity and visiblity](../../core-features/style-props#opacity-and-visibility)
+- [margin and padding](../../core-features/style-props#margin-and-padding)
+
+### Additional props
+
+| Name          | Required | Type                                             | Default        | Description                  |
+| ------------- | -------- | ------------------------------------------------ | -------------- | ---------------------------- |
+| `size`        | false    | <t>PearlTheme.components.Divider["sizes"]</t>    |                | The size of the divider      |
+| `variant`     | false    | <t>PearlTheme.components.Divider["variants"]</t> |                | The variant of the divider   |
+| `thickness`   | false    | <t>number</t>                                    | `1`            | The thickness of the divider |
+| `length`      | false    | <t>number \| string</t>                          | `"100%"`       | The length of the divider    |
+| `orientation` | false    | <t>"horizontal" \| "vertical"</t>                | `"horizontal"` | The direction of the divider |
+
+## Default Component Config
+
+```js
+export default {
+  baseStyle: {
+    orientation: "horizontal",
+    bg: {
+      light: "neutral.300",
+      dark: "neutral.900",
+    },
+    thickness: 1,
+    length: "100%",
+  },
+};
+```

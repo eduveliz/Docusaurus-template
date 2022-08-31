@@ -1,0 +1,290 @@
+---
+sidebar_position: 3
+title: Avatar
+---
+
+The **Avatar** component is used to represent a user, and displays the profile picture, initials or a fallback icon.
+
+## Import
+
+Pearl UI exports 2 avatar-related components:
+
+1. **Avatar:** Used to represent a single user.
+2. **AvatarGroup:** A wrapper which stacks multiple **Avatar** components together and provides the ability to truncate the number of avatars that get shown.
+
+```jsx
+import { Avatar, AvatarGroup } from "pearl-ui";
+```
+
+## Usage
+
+```jsx
+// Displaying a local user image
+<Avatar src={require("<path-to-local-user-image>.jpeg")} />
+
+// Displaying a user image from a remote source
+<Avatar src="https://pbs.twimg.com/profile_images/1419369145058041856/eshLFaDy_400x400.jpg" />
+```
+
+### Avatar sizes
+
+Use the `size` prop to change the size of the avatar. You can set the value to the keys available in <t>theme.components.Avatar["sizes"]</t>, which are <t>"s"</t>, <t>"m"</t>, <t>"l"</t>, and <t>"xl"</t> in the [default theme](#default-component-config).
+
+```jsx
+<Avatar
+  src="https://pbs.twimg.com/profile_images/1419369145058041856/eshLFaDy_400x400.jpg"
+  size="s"
+/>
+
+<Avatar
+  src="https://pbs.twimg.com/profile_images/1419369145058041856/eshLFaDy_400x400.jpg"
+  size="m"
+/>
+
+<Avatar
+  src="https://pbs.twimg.com/profile_images/1419369145058041856/eshLFaDy_400x400.jpg"
+  size="l"
+/>
+
+<Avatar
+  src="https://pbs.twimg.com/profile_images/1419369145058041856/eshLFaDy_400x400.jpg"
+  size="xl"
+/>
+```
+
+### Avatar Fallback
+
+Sometimes, the image you want to display doesn't exist or cannot be accessed due to network issues. In these cases, it is a good practice to show a replacement to the user as a fallback.
+
+```jsx
+// Displays an fallback avatar with the initials of the user
+<Avatar name="Rohit Agrawal" />;
+
+// Displays an image saying 'No Image Available' in case the source image doesn't exist
+<Avatar
+  src="https://4kwallpapers.com/imas/wallpapers/macos-big-sur-apple-layers-fluidic-colorful-wwdc-stock-2560x1440-1455.jpg"
+  fallbackSource={{
+    uri: "https://cdn.segmentnext.com/wp-content/themes/segmentnext/images/no-image-available.jpg",
+  }}
+/>;
+
+// Displays a custom component with an error icon in case the source image doesn't exist
+import { Icon } from "pearl-ui";
+
+<Avatar
+  backgroundColor="neutral.200"
+  fallbackComponent={
+    <Icon
+      iconFamily="FontAwesome"
+      iconName="user-circle"
+      color="neutral.600"
+      rawSize={55}
+    />
+  }
+/>;
+```
+
+If both the props are specified, the `fallbackComponent` prop takes higher precedence over `fallbackSource`.
+
+### Avatar Group
+
+In some cases, you might need to stack avatars as a group. This is where the **AvatarGroup** component comes in handy.
+
+It expects a `max` prop to limit the amount of avatars to show, and shows a "+X" label (where X is the remaining avatars). It also provides a central place to control the `size` and `variant` of all the children **Avatar** components. It also expects a `spacing` prop to adjust the spacing between the avatars.
+
+```jsx
+<AvatarGroup spacing="2xl" max={2} truncatedBackgroundColor="neutral.200">
+  <Avatar
+    name="Rohit Agrawal"
+    src="https://pbs.twimg.com/profile_images/1419369145058041856/eshLFaDy_400x400.jpg"
+  />
+  <Avatar
+    name="Rohit Agrawal"
+    src="https://avatars.githubusercontent.com/u/29514438?s=400&u=d194d5de8df93f55038130ccc66429f94f8f900f&v=4"
+  />
+  <Avatar
+    name="Rohit Agrawal"
+    src="https://instagram.fdel1-3.fna.fbcdn.net/v/t51.2885-19/s320x320/160616189_1075891466264003_198594308312142696_n.jpg?_nc_ht=instagram.fdel1-3.fna.fbcdn.net&_nc_cat=111&_nc_ohc=-URhWepekUsAX_wt_-J&edm=ABfd0MgBAAAA&ccb=7-4&oh=00_AT-caDqy7XqUUTkGv5_QytlFTxtdZ2wVhZDgB4vU3Jl2qQ&oe=61DF5972&_nc_sid=7bff83"
+  />
+</AvatarGroup>
+```
+
+### Avatar Badges
+
+You can use [Badge](../feedback/Badge) to add status badges or pressable badges to the avatar to show online/offline status, add action buttons, etc.
+
+```jsx
+const OnlineAvatar = withBadge(undefined, {
+  placement: "bottomRight",
+  backgroundColor: "success.500",
+  size: "s",
+  minW: 15,
+  h: 15,
+  offset: 0,
+})(Avatar);
+
+const OfflineAvatar = withBadge(undefined, {
+  placement: "bottomRight",
+  backgroundColor: "danger.500",
+  size: "s",
+  minW: 15,
+  h: 15,
+  offset: 0,
+})(Avatar);
+
+const AvatarWithEditButton = withBadge(
+  <Icon iconFamily="Ionicons" iconName="pencil" size="s" color="white" />,
+  {
+    placement: "bottomRight",
+    size: "m",
+    onPress: () => {
+      console.log("PRESSED!");
+    },
+  }
+)(Avatar);
+```
+
+### Changing the initials logic
+
+**Avatar** optionally expects a `getInitials` prop that lets you control how the user's initials should be computed.
+
+```tsx
+const firstNameTwoLetters = (name: string) => `${name[0]}${name[1]}`.toUpperCase()
+
+<Avatar name="Rohit Agrawal" getInitials={firstNameTwoLetters} />;
+```
+
+### Override Style
+
+The **Avatar** component also supports a [variety of style props](#supported-style-props) which can be used to override the pre-defined component style in the theme. Manual style props passed into the component have a higher precedance than the [default component config](#default-component-config).
+
+```jsx
+<Avatar mt="xl" borderRadius="m" />
+```
+
+## Example
+
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<Tabs
+  defaultValue="light"
+  values={[
+    { label: 'Light', value: 'light', },
+    { label: 'Dark', value: 'dark', },
+  ]
+}>
+<TabItem value="light">
+
+<Snack snackId="@agrawal-rohit/avatar-light" />
+
+</TabItem>
+
+<TabItem value="dark">
+
+<Snack snackId="@agrawal-rohit/avatar-dark" />
+
+</TabItem>
+</Tabs>
+
+## Accessibility
+
+- **Avatar** has the `role` of `image`.
+
+## Avatar Props
+
+### Supported style props
+
+**Avatar** composes the [Image](./Image) component, you can pass all [Image](./Image) props to it.
+
+### Additional props
+
+| Name          | Required | Type                                            | Default                             | Description                                                                                                                 |
+| ------------- | -------- | ----------------------------------------------- | ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `size`        | false    | <t>PearlTheme.components.Avatar["sizes"]</t>    | `"m"`                               | The size of the avatar.                                                                                                     |
+| `variant`     | false    | <t>PearlTheme.components.Avatar["variants"]</t> |                                     | The variant of the avatar.                                                                                                  |
+| `src`         | false    | <t>string \| number</t>                         |                                     | The source of the Avatar image. This can be a url, or a local image.                                                        |
+| `name`        | false    | <t>string</t>                                   |                                     | The name of the person in the avatar. If 'src' is not loaded or is missing, the 'name' will be used to create the initials. |
+| `getInitials` | false    | <t>(name: string): string</t>                   | Takes the first letters of the name | A method to specify how initials are generated from a user's name.                                                          |
+
+## AvatarGroup Props
+
+### Supported style props
+
+**AvatarGroup** composes the [Box](../layout/Box) component, you can pass all [Box](../layout/Box) props to it.
+
+### Additional props
+
+| Name                       | Required | Type                                            | Default                             | Description                                                                                                             |
+| -------------------------- | -------- | ----------------------------------------------- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `size`                     | false    | <t>PearlTheme.components.Avatar["sizes"]</t>    | `"m"`                               | The size of all the children avatars in the group..                                                                     |
+| `variant`                  | false    | <t>PearlTheme.components.Avatar["variants"]</t> |                                     | The variant of all the children avatars in the group.                                                                   |
+| `spacing`                  | false    | <t>PearlTheme["spacing"]</t>                    |                                     | The spacing between the avatars.                                                                                        |
+| `truncatedBackgroundColor` | false    | <t>PearlTheme["palette"]</t>                    |                                     | The background color of the circle which shows the "+X" label of remaining avatars.                                     |
+| `max`                      | false    | <t>number</t>                                   | Takes the first letters of the name | Maximum number of avatars to show. It'll truncate the avatars and show a "+X" label (where X is the remaining avatars). |
+
+## Default component Config
+
+```js
+export default {
+  parts: ["root", "text"],
+  baseStyle: {
+    root: {
+      borderRadius: "full",
+      borderWidth: 2,
+      borderColor: {
+        light: "neutral.50",
+        dark: "neutral.800",
+      },
+    },
+  },
+  sizes: {
+    s: {
+      root: {
+        width: 40,
+        height: 40,
+      },
+      text: {
+        variant: "caption",
+      },
+    },
+    m: {
+      root: {
+        width: 55,
+        height: 55,
+      },
+      text: {
+        variant: "p1",
+        fontSize: "m",
+        lineHeight: "3xl",
+      },
+    },
+    l: {
+      root: {
+        width: 70,
+        height: 70,
+      },
+      text: {
+        variant: "p1",
+        fontSize: "m",
+        lineHeight: "3xl",
+      },
+    },
+    xl: {
+      root: {
+        width: 85,
+        height: 85,
+      },
+      text: {
+        variant: "p1",
+        fontSize: "4xl",
+        lineHeight: "8xl",
+      },
+    },
+  },
+  defaults: {
+    size: "m",
+  },
+};
+```
